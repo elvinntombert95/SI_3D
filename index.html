@@ -1,63 +1,3 @@
-<?php
-session_start();
-require_once('session/class.user.php');
-$user = new USER();
-
-if($user->is_loggedin()!="")
-{
-	$user->redirect('index.php');
-}
-
-if(isset($_POST['btn-signup']))
-{
-	$uname = strip_tags($_POST['txt_uname']);
-	$umail = strip_tags($_POST['txt_umail']);
-	$upass = strip_tags($_POST['txt_upass']);	
-	
-	if($uname=="")	{
-		$error[] = "Veuillez rentrer un pseudo !";	
-	}
-	else if($umail=="")	{
-		$error[] = "Veuillez rentrer un email !";	
-	}
-	else if(!filter_var($umail, FILTER_VALIDATE_EMAIL))	{
-	    $error[] = 'Ajoutez une adresse mail valide !';
-	}
-	else if($upass=="")	{
-		$error[] = "Veuillez rentrer un mot de passe !";
-	}
-	else if(mb_strlen($upass) < 6){
-		$error[] = "Le mot de passe doit avoir 6 characters";	
-	}
-	else
-	{
-		try
-		{
-			$stmt = $user->runQuery("SELECT name, email FROM users WHERE name=:uname OR email=:umail");
-			$stmt->execute(array(':uname'=>$uname, ':umail'=>$umail));
-			$row=$stmt->fetch(PDO::FETCH_ASSOC);
-				
-			if($row['name']==$uname) {
-				$error[] = "Désole ! Ce pseudo est non valide ou déjà utilisé.";
-			}
-			else if($row['email']==$umail) {
-				$error[] = "Désole ! Cet e-mail est non valide ou déjà utilisé.";
-			}
-			else
-			{
-				if($user->register($uname,$umail,$upass)){	
-					$user->redirect('index.php?joined');
-				}
-			}
-		}
-		catch(PDOException $e)
-		{
-			echo $e->getMessage();
-		}
-	}	
-}
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -116,32 +56,11 @@ if(isset($_POST['btn-signup']))
 
 			<div class="container">	
         <form method="post" class="form-signin" style="float: left;">
-            <?php
-			if(isset($error))
-			{
-			 	foreach($error as $error)
-			 	{
-					 ?>
-                     <div class="alert alert-danger">
-                        <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?>
-                     </div>
-                     <?php
-				}
-			}
-			else if(isset($_GET['joined']))
-			{
-				 ?>
-                 <div class="alert alert-info">
-                      <i class="glyphicon glyphicon-log-in"></i> &nbsp; Inscription Reussite <a href='index.php'>Connectez-vous ici</a>
-                 </div>
-                 <?php
-			}
-			?>
             <div class="form-group">
-            <input type="text" id="nom" class="form-control" name="txt_uname" placeholder="Pseudo" value="<?php if(isset($error)){echo $uname;}?>" />
+            <input type="text" id="nom" class="form-control" name="txt_uname" placeholder="Pseudo"/>
             </div>
             <div class="form-group">
-            <input type="text" id="email" class="form-control" name="txt_umail" placeholder="E-mail" value="<?php if(isset($error)){echo $umail;}?>" />
+            <input type="text" id="email" class="form-control" name="txt_umail" placeholder="E-mail"/>
             </div>
             <div class="form-group">
             	<input type="password" id="password" class="form-control" name="txt_upass" placeholder="Mot de passe" />
