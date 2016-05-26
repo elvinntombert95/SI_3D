@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Grim Reaper</title>
+		<script type='text/javascript' src='https://ssl-webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/jquery.min.js'></script>
+		<script type="text/javascript">
+		<!--
+		var unityObjectUrl = "http://webplayer.unity3d.com/download_webplayer-3.x/3.0/uo/UnityObject2.js";
+		if (document.location.protocol == 'https:')
+			unityObjectUrl = unityObjectUrl.replace("http://", "https://ssl-");
+		document.write('<script type="text\/javascript" src="' + unityObjectUrl + '"><\/script>');
+		-->
+		</script>
+		<script type="text/javascript">
+		<!--
+			var config = {
+				width: 960, 
+				height: 600,
+				params: { enableDebugging:"0" }
+				
+			};
+			var u = new UnityObject2(config);
+
+			jQuery(function() {
+
+				var $missingScreen = jQuery("#unityPlayer").find(".missing");
+				var $brokenScreen = jQuery("#unityPlayer").find(".broken");
+				$missingScreen.hide();
+				$brokenScreen.hide();
+				
+				u.observeProgress(function (progress) {
+					switch(progress.pluginStatus) {
+						case "broken":
+							$brokenScreen.find("a").click(function (e) {
+								e.stopPropagation();
+								e.preventDefault();
+								u.installPlugin();
+								return false;
+							});
+							$brokenScreen.show();
+						break;
+						case "missing":
+							$missingScreen.find("a").click(function (e) {
+								e.stopPropagation();
+								e.preventDefault();
+								u.installPlugin();
+								return false;
+							});
+							$missingScreen.show();
+						break;
+						case "installed":
+							$missingScreen.remove();
+						break;
+						case "first":
+						break;
+					}
+				});
+				u.initPlugin(jQuery("#unityPlayer")[0], "Build.unity3d");
+			});
+		-->
+		</script>
+		<style type="text/css">
+body {
+	background: url(../img/back.jpg) no-repeat;
+	background-size: cover;
+	width: 100%;
+	height: 100vh;
+	 font-family: 'AvenirCondensedHand';
+}
+
+a {
+	color: white;
+	text-decoration: none;
+}
+		
+		/* HEADER */
+header {
+	padding: 30px;
+	margin-bottom: 50px;
+}
+
+.prout{
+	float: left;
+	color: #fff;
+	font-family: 'Wendy One', sans-serif;
+}
+
+li:hover{
+	color: #000;
+}
+
+
+ul li{
+	display: inline-block;
+	margin: 0 15px;
+	text-transform: uppercase;
+	color: #fff;
+	font-family: 'Lato', sans-serif;
+}
+
+ul{
+	float: right;
+}
+
+.titre{
+	width: 500px;
+	margin: 150px auto;
+	text-align: center;
+}
+
+.titre img::after{
+	content: url(../img/jouer.png)
+}
+
+.jouer{
+	margin-left: -180px;
+}
+
+		</style>
+	</head>
+	<body>
+		<header>
+			<div class="prout"><a href="../index.php"><p>Grim Reaper</p></a></div>
+			<nav class="first-nav">
+				<ul>
+					<a href="#sectionGameplay" class="js-scrollTo"><li>règles</li></a>
+					<a href="session/index.php" class="js-scrollTo"><li>se connecter</li></a>
+					<a href="#sectionInscription" class="js-scrollTo"><li>inscription</li></a>
+				</ul>
+				<div class="clear"></div>
+			</nav>
+			<!-- /titre -->
+		</header>
+		<div class="content">
+			<div id="unityPlayer">
+				<div class="missing">
+					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now!">
+						<img alt="Unity Web Player. Install now!" src="http://webplayer.unity3d.com/installation/getunity.png" width="193" height="63" />
+					</a>
+				</div>
+				<div class="broken">
+					<a href="http://unity3d.com/webplayer/" title="Unity Web Player. Install now! Restart your browser after install.">
+						<img alt="Unity Web Player. Install now! Restart your browser after install." src="http://webplayer.unity3d.com/installation/getunityrestart.png" width="193" height="63" />
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<p>MEILLEUR SCORE:</p><?=$userRow['score'];?>
+
+
+
+		<script type="text/javascript" >
+			function getScore(score) {
+		        $.ajax({
+		            url: "http://localhost/grim_reaper/getScore.php",
+		            type: "POST",
+		            data: {'score': score, 'id':<?=$id?>},
+		            success: function (data) {
+		                console.log('Send Time succesfuly');
+		            }
+		        });
+		    }
+		</script>
+	</body>
+</html>

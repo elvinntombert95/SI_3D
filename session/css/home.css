@@ -1,0 +1,131 @@
+@font-face {
+    font-family: 'AvenirCondensedHand';
+    src: url(../font/AvenirCondensedHand.ttf);
+}
+
+body {
+	 font-family: 'AvenirCondensedHand';
+}
+
+/* HEADER */
+
+.header {
+	padding: 40px 80px;
+}
+
+.header a {
+	color: white;
+	text-decoration: none;
+	font-family: 'Wendy One', sans-serif;
+	float: left;
+}
+
+.prout{
+	float: left;
+	color: #fff;
+	font-family: 'Wendy One', sans-serif;
+}
+
+li:hover{
+	color: #000;
+}
+
+
+ul li{
+	display: inline-block;
+	margin: 0 15px;
+	text-transform: uppercase;
+	color: #fff;
+	font-family: 'Lato', sans-serif;
+}
+
+ul{
+	float: right;
+}
+/* HEADER*/
+
+
+.left {
+	float: left;
+}
+.right {
+	text-align: right;
+}
+
+.container{
+	    margin-top: 150px;
+}
+
+.container-fluid {
+		background: url(../img/back1.png) no-repeat;
+	background-size: cover;
+	width: 100%;
+	height: 100vh;
+
+}
+
+.container h1 {
+	font-size: 100px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.h4 {
+	text-align: center;
+	font-size: 40px;
+}
+
+.level {
+	background: url(../img/back2.png);
+	/*padding:80px;*/
+	    float: left;
+	    width: 100%;
+}
+
+.level h1 {
+	font-size: 60px;
+	color: #ffffff;
+	margin-bottom: 150px;
+}
+
+.level ul li {
+	font-size: 50px;
+	font-weight: bold;
+	color: white;
+	display: inline-block;
+	float: left;
+	padding-left: 150px;
+}
+
+.level img {
+	margin-left: -10px;
+	margin-bottom: 60px;
+	width: 442px;
+	height:227px;
+}
+
+.cs {
+	margin-left: 150px;
+	border: 1px solid;
+	width: 290px;
+	height:227px;
+}
+
+.cs p {
+	    text-align: center;
+       margin: 30% 50% 20% 0%;
+    font-weight: bold;
+    font-family: cursive;
+}
+
+.back {
+	background: url(../img/footer.png);
+	    float: left;
+    clear: both;
+    width: 100%;
+}
+
+img.footer {
+	width: 100%;
+}
+
